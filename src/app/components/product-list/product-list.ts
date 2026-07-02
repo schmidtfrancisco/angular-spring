@@ -2,18 +2,18 @@ import { Component, inject, OnInit, signal, WritableSignal } from '@angular/core
 import { ProductService } from '../../services/product';
 import { Product } from '../../common/product';
 import { CurrencyPipe } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.html',
-  imports: [CurrencyPipe],
+  imports: [CurrencyPipe, RouterLink],
   styleUrl: './product-list.css',
 })
 export class ProductList {
-  productService = inject(ProductService);
   products = signal<Product[]>([]);
-  route: ActivatedRoute = inject(ActivatedRoute);
+  private productService = inject(ProductService);
+  private route = inject(ActivatedRoute);
   currentCategoryId: number = 1;
   searchMode: boolean = false;
 
