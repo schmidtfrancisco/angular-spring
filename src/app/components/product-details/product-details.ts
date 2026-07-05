@@ -3,6 +3,8 @@ import { Product } from '../../common/product';
 import { ProductService } from '../../services/product';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CurrencyPipe } from '@angular/common';
+import { CartService } from '../../services/cart';
+import { CartItem } from '../../common/cart-item';
 
 @Component({
   selector: 'app-product-details',
@@ -13,6 +15,7 @@ import { CurrencyPipe } from '@angular/common';
 export class ProductDetails {
   product = signal<Product|undefined>(undefined);
   private productService = inject(ProductService);
+  private cartService = inject(CartService);
   private route = inject(ActivatedRoute);
 
   constructor() {
@@ -28,5 +31,14 @@ export class ProductDetails {
         this.product.set(data);
       }
     )
+  }
+
+  addToCart() {
+    const product = this.product();
+
+    if (product) {
+      const cartItem = new CartItem(product);
+      this.cartService.addToCart(cartItem);
+    }
   }
 }

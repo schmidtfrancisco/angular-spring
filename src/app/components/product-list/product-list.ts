@@ -4,6 +4,8 @@ import { Product } from '../../common/product';
 import { CurrencyPipe } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CartItem } from '../../common/cart-item';
+import { CartService } from '../../services/cart';
 
 @Component({
   selector: 'app-product-list',
@@ -14,6 +16,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 export class ProductList {
   products = signal<Product[]>([]);
   private productService = inject(ProductService);
+  private cartService = inject(CartService);
   private route = inject(ActivatedRoute);
   currentCategoryId: number = 1;
   previousCategoryId: number = 1;
@@ -90,6 +93,13 @@ export class ProductList {
       this.pageSize = data.page.size;
       this.totalElements = data.page.totalElements;
     };
+  }
+
+  addToCart(product: Product) {
+    console.log(`Adding to cart: ${product.name}, ${product.unitPrice}`);
+    const cartItem = new CartItem(product);
+
+    this.cartService.addToCart(cartItem);
   }
 }
 
