@@ -4,10 +4,11 @@ import { ProductCategoryMenu } from './components/product-category-menu/product-
 import { Search } from './components/search/search';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CartStatus } from './components/cart-status/cart-status';
+import { LoginStatus } from './components/login-status/login-status';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, ProductCategoryMenu, Search, NgbModule, CartStatus, RouterLinkWithHref],
+  imports: [RouterOutlet, ProductCategoryMenu, Search, NgbModule, CartStatus, LoginStatus, RouterLinkWithHref],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

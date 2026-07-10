@@ -1,0 +1,18 @@
+<div class="login-status-header">
+  @if (isAuthenticated) {
+    
+  }
+
+  @if (!isAuthenticated) {
+    <button (click)="login()" class="security-btn">Login</button>
+  }
+  @if (auth.error$ | async; as error) {
+  <p>Error: {{ error.message }}</p>
+  }
+
+  @if (isAuthenticated) {
+    <button (click)="logout()" class="security-btn">Logout</button>
+    <button routerLink="/members" class="security-btn ms-1">Member</button>
+    <button routerLink="/order-history" class="security-btn ms-1">Orders</button>
+  }
+</div>
