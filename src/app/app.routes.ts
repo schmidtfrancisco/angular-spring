@@ -5,6 +5,7 @@ import { CartDetails } from './components/cart-details/cart-details';
 import { Checkout } from './components/checkout/checkout';
 import { MemberPage } from './components/member-page/member-page';
 import { AuthGuard } from '@auth0/auth0-angular';
+import { OrderHistoryComponent } from './components/order-history/order-history';
 
 export const routes: Routes = [
   {
@@ -38,6 +39,11 @@ export const routes: Routes = [
   {
     path: 'members',
     component: MemberPage,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'order-history',
+    component: OrderHistoryComponent,
     canActivate: [AuthGuard]
   },
   {

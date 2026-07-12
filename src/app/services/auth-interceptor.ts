@@ -6,7 +6,7 @@ import { from, lastValueFrom, Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class AuthInterceptor implements HttpInterceptor {
+export class AuthInterceptorService implements HttpInterceptor {
   private auth = inject(AuthService);
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {

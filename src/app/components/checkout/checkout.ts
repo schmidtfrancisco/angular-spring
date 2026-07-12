@@ -27,6 +27,7 @@ export class Checkout {
   countries: Country[] = [];
   shippingStates: State[] = [];
   billingStates: State[] = [];
+  storage: Storage = sessionStorage;
 
   private shopeandoFormService = inject(ShopeandoFormService);
   private cartService = inject(CartService);
@@ -34,34 +35,11 @@ export class Checkout {
   private checkoutService = inject(CheckoutService);
   private router = inject(Router);
 
-  constructor() {
-    const startMonth: number = new Date().getMonth() + 1;
-    this.shopeandoFormService.getCreditCardMonths(startMonth).subscribe(
-      data => {
-        this.creditCardMonths = data
-      }
-    );
-
-    this.shopeandoFormService.getCreditCardYears().subscribe(
-      data => {
-        this.creditCardYears = data
-      }
-    );
-
-    this.shopeandoFormService.getCountries().subscribe(
-      data => {
-        this.countries = data
-      }
-    );
-
-    this.reviewCartDetails();
-  }
-
   checkoutForm = this.formBuilder.nonNullable.group({
     customer: this.formBuilder.nonNullable.group({
       firstName: ['', [Validators.required, Validators.minLength(2), ShopeandoValidators.notOnlyWhitespace]],
       lastName: ['', [Validators.required, Validators.minLength(2), ShopeandoValidators.notOnlyWhitespace]],
-      email: ['', [Validators.required, Validators.email, ShopeandoValidators.notOnlyWhitespace]]
+      email: [JSON.parse(this.storage.getItem('userEmail')!) || '', [Validators.required, Validators.email, ShopeandoValidators.notOnlyWhitespace]]
     }),
     shippingAddress: this.formBuilder.nonNullable.group({
       street: ['', [Validators.required, Validators.minLength(2), ShopeandoValidators.notOnlyWhitespace]],
@@ -86,6 +64,30 @@ export class Checkout {
       expirationYear: ['']
     })
   });
+
+  constructor() {
+    const startMonth: number = new Date().getMonth() + 1;
+    this.shopeandoFormService.getCreditCardMonths(startMonth).subscribe(
+      data => {
+        this.creditCardMonths = data
+      }
+    );
+
+    this.shopeandoFormService.getCreditCardYears().subscribe(
+      data => {
+        this.creditCardYears = data
+      }
+    );
+
+    this.shopeandoFormService.getCountries().subscribe(
+      data => {
+        this.countries = data
+      }
+    );
+
+    this.reviewCartDetails();
+    
+  }
 
   get firstName() { return this.checkoutForm.get('customer.firstName'); }
   get lastName() { return this.checkoutForm.get('customer.lastName'); }
