@@ -13,7 +13,7 @@ export const appConfig: ApplicationConfig = {
       domain: "dev-eh3l2g5ka7lckp21.us.auth0.com",
       clientId: "Cep1lr8ZIzcoHUgYU4SGyRDi2O1AWiHr",
       authorizationParams: {
-        redirect_uri: "http://localhost:4200/login/callback",
+        redirect_uri: "https://localhost:4200/login/callback",
         audience: "http://localhost:8080",
       },
       httpInterceptor: {
